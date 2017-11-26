@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<!--     <script src="arduinoPort.js"></script>
+    <script src="receivesocket.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
+<!--     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+ -->    <script src="p5forsound.js"></script>
+        <script src="sketch.js"></script>
+
+  </head>
+  <body>
+<!--     <canvas id="canvas3"></canvas> -->
+<!--   Setting up page 1 -->
+    <section class="page" id="page-1"> 
+        <div style="text-align:center">
+        <h1>Step 1</h1>
+        <h2>Choose your background</h2>
+
+     <!-- setting up the slideshow from W3 Schools -->
+      <div class="slideshow-container">
+        <div class="mySlides fade" id=img1>
+          <div class="numbertext">1 / 3</div>
+          <img src="cat.gif" style="width:100%">
+          <div class="text">Caption Text</div>
+        </div>
+
+        <div class="mySlides fade" id=img2>
+          <div class="numbertext">2 / 3</div>
+          <img src="img2.jpg" style="width:100%">
+          <div class="text">Caption Two</div>
+        </div>
+
+        <div class="mySlides fade" id=img3>
+          <div class="numbertext">3 / 3</div>
+          <img src="img3.jpg" style="width:100%">
+          <div class="text">Caption Three</div>
+        </div>
+
+
+    <!--   <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+      <a class="next" onclick="plusSlides(1)">&#10095;</a> -->
+      </div>
+      <br>
+      
+        <div style="text-align:center">
+          <span class="dot"/,.></span> 
+          <span class="dot"/,.></span> 
+          <span class="dot"/,></span> 
+        </div>
+      <button id="page1button">Next</button>
+    </div>
+    </section>
+
+
+<!--   Setting up page 2 -->
+    <section class="page" id="page-2">
+      <div style="text-align:center">
+      <h1> Step 2 </h1>
+      <p> Choose your song </p>
+
+      <!-- setting up the song slideshow from W3 Schools -->
+      <div class="song-slideshow-container">
+        <div class="mySongs fade" id=song1>
+          <div class="numbertext">1 / 3</div>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/gYHlhrV6HTM?rel=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+          <div class="text">Caption Text</div>
+        </div>
+
+        <div class="mySongs fade" id=song2>
+          <div class="numbertext">2 / 3</div>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/2LOUvMMjM_w?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+          <div class="text">Caption Text</div>
+        </div>
+
+        <div class="mySongs fade" id=song3>
+          <div class="numbertext">3 / 3</div>
+          <iframe width="560" height="315" src="https://www.youtube.com/embed/raXMakT99ss?rel=0&amp;controls=0" frameborder="0" allowfullscreen></iframe>
+          <div class="text">Caption Text</div>
+        </div>
+    </div>
+      <br>
+      <button id="page2button">Start</button>     
+  </div>
+    </section>
+
+<!--   Setting up page 3 -->
+    <section class="page" id="page-3">
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    </section>
+
+<!--   Setting up page 4 -->
+    <section class="page" id="page-4">
+      <div style="text-align:center">
+      <h1>Thanks for playing!</h1>
+      <h2>Your video has been recorded!</h2>
+      <br>
+      <button id="page2button">Send to Instagram</button> 
+    </section>
+
+<!--     <script type="text/javascript" src="../lib/soundjs-NEXT.js"></script> -->
+<!-- We also provide hosted minified versions of all CreateJS libraries.
+  http://code.createjs.com -->
+
+    <script src="setup.js"></script>
+  </body>
+</html>
