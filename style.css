@@ -1,4 +1,10 @@
-   	body{
-    		margin: 0;
-    		overflow: hidden;
-    	}
+body {
+  font-family: sans-serif;
+  font-size: 11px;
+  margin: 0px;
+  background-color: #ffffff;
+  overflow: hidden;
+
+#canvas1, #canvas2 {
+  display: none;
+}

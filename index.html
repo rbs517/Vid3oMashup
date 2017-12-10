@@ -1,162 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>three.js webgl - blender -json</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.js"></script>
-        <style>
-            body {
-                background:#777;
-                padding:0;
-                margin:0;
-                font-weight: bold;
-                overflow:hidden;
-            }
-        </style>
-    </head>
-    <body>
-        <script>
-            var container, mixer, geometry, material, toilette2;
-            var camera, scene, renderer;
-            var windowHalfX = window.innerWidth / 2;
-            var windowHalfY = window.innerHeight / 2;
-            var mouseX =0;
-            var mouseY =0;
-            var toilette = [];
-            init();
-            animate();
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+<!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.11/addons/p5.sound.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
+    <script src="threelib/OrbitControls.js"></script>
+    <script src="threelib/GeometryUtils.js"></script>   
+    <script src="threelib/Projector.js"></script>
+    <script src="threelib/SVGRenderer.js"></script> 
+    <script src="threelib/Qrcode.js"></script>
+    
+  </head>
+  <body>  
+    <video id='imovievideo' autoplay loop webkit-playsinline style="display:none"><source src='videos/video3d.mp4' type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video>
 
-            function init() {
-                container = document.createElement( 'div' );
-                document.body.appendChild( container );
-                camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 2000  );
-            
-                //set the x, y, z positions of the camera
-                camera.position.set( 2, 4, 5 );
-                // camera.position.z = 1000;
-                //camera.position.x = 2;
-                scene = new THREE.Scene();
-                // scene.background = new THREE.color(0xff6600)
-               //scene.fog = new THREE.FogExp2( 0x000000, 0.035 );
-                //mixer = new THREE.AnimationMixer( scene );
-                geometry = new THREE.Geometry();
-                
-                // instantiate a loader
-                var loader = new THREE.JSONLoader();
+<!--     <audio id="sound1" loop>
+    <source src="sound/nomanssky.mp3" type="audio/mpeg">
+    </audio> 
 
-                // load a resource
-                loader.load(
+    <audio id="sound2" loop>
+    <source src="sound/forze_1.mp3" type="audio/mpeg">
+    </audio> 
 
-                    // resource URL - change json format to js
-                    'toilette.js', //Created by Ieva Lickiene, www.meandmy3d.com
+    <audio id="sound3" loop>
+    <source src="sound/mrrobot2.mp3" type="audio/mpeg">
+    </audio> 
 
-                    // Function when resource is loaded
-                    function ( geometry, materials ) {
-
-                        //var material = materials[ 0 ];
-                        // var material = new THREE.MeshBasicMaterial({color: 0xff0000});
-                        material = new THREE.MeshLambertMaterial({morphTargets : true, color:0x7a7a7a });
-
-                        // group = new THREE.Group();
-                        // var toilette1 = new THREE.Mesh( geometry, material );
-                        //     toilette1.position.set( 1, 1, 1 );
-                        //     toilette1.rotation.x = Math.random() * 2;
-                        //     toilette1.rotation.y = Math.random() * 2;
-                        //     toilette1.rotation.z = Math.random() * 2;
-                        //     scene.add( toilette1 );
+    <audio id="sound4" loop>
+    <source src="sound/ni_1-3.mp3" type="audio/mpeg">
+    </audio>  -->
 
 
-                        // toilette2 = new THREE.Mesh( geometry, material );
-                        //     toilette2.position.set( Math.random(), Math.random(), Math.random());
-                        //     toilette2.rotation.x = Math.random() * 2;
-                        //     toilette2.rotation.y = Math.random() * 2;
-                        //     toilette2.rotation.z = Math.random() * 2;
-                            // scene.add( toilette2 );
+<!-- for scene 3: -->
 
-                        for (i = 0; i < 10; i++) { 
-                            toilette[i] = new THREE.Mesh( geometry, material );
-                            toilette[i].position.set( Math.random(), Math.random(), Math.random());
-                            toilette[i].rotation.x = Math.random() * 2;
-                            toilette[i].rotation.y = Math.random() * 2;
-                            toilette[i].rotation.z = Math.random() * 2;
+<!--     <canvas id="myCanvas"></canvas>
+    <canvas id="canvas1"></canvas> -->
+    <script type="x-shader/x-vertex" id="vertexShader">
+    //FOR THE CUSTOM SHADER MATERIAL- SHADER
+    //moderlViewPosition = position of the model/mesh within the scene x position of the vertex
+    //gl_Position = camera's relation to the model/mesh within the scene x position of the model/mesh within the scene
+    void main() 
+    {
+        vec4 modelViewPosition = modelViewMatrix * vec4(position, 1.0);
+        gl_Position = projectionMatrix * modelViewPosition;
+    }
+    </script>
 
-                              }
-                            })   
-                            // group.add( mesh );
-                              
-                            // scene.add( group );
-                            // scene.add( mesh );
+    <script type="x-shader/x-fragment" id="fragmentShader">
+    //FOR THE CUSTOM SHADER MATERIAL- FRAGMENT
+    //gl_Fragcolor is r,g,b,a channels of color of shader
+    void main() {
+        gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    }
+    </script>
 
+    <script type="x-shader/x-vertex" id="vertexShader2">
+    //Creating a Shader- vertex, attributes, uniforms
+    attribute float vertexDisplacement; //animating the mesh
+    uniform float delta;
+    varying float vOpacity;
+    varying vec3 vUv;
 
-                        // scene.add( material );
+    void main() 
+    {
+        vUv = position;
+        vOpacity = vertexDisplacement;
 
-                        // var object = new THREE.Mesh( geometry, material );
-                        console.log(geometry)
-                        // scene.add( object );
+        vec3 p = position;
 
-                        
-                    
-                // lights
-                var ambientLight = new THREE.AmbientLight( 0xcccccc );
-                scene.add( ambientLight );
-                var pointLight = new THREE.PointLight( 0xffffff, 5, 10 );
-                pointLight.position.set( 0, 5, 0 );
-                scene.add( pointLight )
+        p.x += sin(vertexDisplacement) * 50.0; //oscillation of the x-vertices
+        p.y += cos(vertexDisplacement) * 50.0; //oscillation of the y-vertices
 
-                // renderer
-                renderer = new THREE.WebGLRenderer();
-                renderer.setPixelRatio( window.devicePixelRatio );
-                renderer.setSize( window.innerWidth, window.innerHeight );
-                container.appendChild( renderer.domElement );
+        vec4 modelViewPosition = modelViewMatrix * vec4(p, 1.0);
+        gl_Position = projectionMatrix * modelViewPosition;
+    }
+    </script>
 
-                // events
-                window.addEventListener( 'resize', onWindowResize, false );
-                // document.addEventListener( 'mousemove',  onDocumentMouseMove, false );
-                // document.addEventListener( 'mousemove',  onDocumentMouseMove, false );
-                window.addEventListener( 'click', mousePressed, false);
-           }
-            //
-         function onWindowResize() {
-         
-            //camera.aspect = window.innerWidth / window.innerHeight;
-            // camera.updateProjectionMatrix();
-            renderer.setSize( window.innerWidth, window.innerHeight );
- }
+    <script type="x-shader/x-fragment" id="fragmentShader2">
+    uniform float delta;
+    varying float vOpacity;
+    varying vec3 vUv;
 
-        // function onDocumentMouseMove(event) {
-        //  mouseX = ( event.clientX - windowHalfX );
-        //  mouseY = ( event.clientY - windowHalfY ); 
-        // }
+    void main() {
+
+        float r = 0.0 + cos(vUv.x * delta); //oscillation of the r color values
+        float g = 0.0;                       //oscillation of the g color values
+        float b = 0.0 + sin(delta);        //oscillation of the g color values
+        vec3 rgb = vec3(r, g, b);
+
+        gl_FragColor = vec4(rgb, vOpacity); //passing values to frag color
+    }
 
 
-            function mousePressed(evt) {
-            console.log("changing background");
-            // scene.background = new THREE.Color( 0Xc465e5 );
-            // scene.add( toilette2 );
-            // scene.add( toilette[evt] );
-            scene.add( toilette[2] );
-}
+    <canvas id="canvas"></canvas>
+
+    </script>
 
 
-            //
-            function animate() {
-                requestAnimationFrame( animate );
-                render();
-            }
-            function render() {
-                camera.position.x = 4;
-                camera.position.y = 4;
-                camera.position.y = 4;
-
-                //making the toilette go in spirals
-                // camera.position.z = 4;
-                // camera.position.x = mouseX;
-                // camera.position.y = mouseY;
-                // mixer.update( getDelta() );
-                camera.lookAt( scene.position );
-                renderer.render( scene, camera );
-            }
-        </script>
-    </body>
+    <script src="scene5.js"></script>
+    <script src="scene4.js"></script>
+    <script src="scene3.js"></script>
+    <script src="scene2.js"></script>
+    <script src="p5forsound.js"></script>
+    <script src="scene1.js"></script>
+    <script src="scene0.js"></script>
+    <script src="setup.js"></script>
+    <!--<script src="setup-12-5.js"></script>-->
+    <!--<script src="sketches/intro.js"></script>-->
+  </body>
 </html>
